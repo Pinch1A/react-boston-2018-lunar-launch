@@ -23,3 +23,7 @@ Then you can start the app with:
 ```sh
 npm start
 ```
+
+## Testing
+
+Run Cypress tests (from folder `cypress/integration`) with command `npx cypress open`
