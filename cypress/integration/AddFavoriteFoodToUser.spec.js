@@ -17,18 +17,13 @@ it('renders the correct number of food items for the user', () => {
   // Navigate to page
   cy.visit('http://localhost:3000/user/1');
 
-  // wait for GraphQL call to happen and check food items
-  cy.blob('@graphql').its('data.user.favoriteFoods')
-    .then(list => Cypress._.map(list, x =>
-      ({name: x.foodItem.name, eatingFrequency: x.eatingFrequency})))
-    // should be same values as in GraphQL mock
-    .should('deep.equal', [
-      {name: 'Spaghetti', eatingFrequency: 'WEEKLY'},
-      {name: 'Coconut Water', eatingFrequency: 'DAILY'}
-    ])
+  // wait for GraphQL call to happen and grab user the name
+  cy.blob('@graphql').its('data.user.name')
+    .then(name => {
+      // Validate page content
+      cy.get('h2').contains(`${name}'s favorite foods:`);
+    })
 
-  // Validate page content
-  cy.get('h2').contains('favorite foods:');
   cy.get('li').should('have.length', 2);
   cy.contains('li', 'I like to eat Spaghetti on a weekly basis');
   cy.contains('li', 'I like to eat Coconut Water on a daily basis');
