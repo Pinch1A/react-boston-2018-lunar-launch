@@ -18,7 +18,7 @@ it('renders the correct number of food items for the user', () => {
   cy.visit('http://localhost:3000/user/1');
 
   // wait for GraphQL call to happen
-  cy.wait('@graphql')
+  cy.blob('@graphql')
 
   // Validate page content
   cy.get('h2').contains('favorite foods:');
